@@ -6,3 +6,6 @@ st.sidebar.title("Parámetros")
 # Ingresar imagenes
 st.image("Pythonlogo.png", width = 300)
 st.sidebar.image("DMCLogo.png", width = 150)
+
+
+st.write("Elaborado por: Gustavo Rodriguez")
