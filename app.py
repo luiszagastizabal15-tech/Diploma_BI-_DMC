@@ -14,7 +14,7 @@ st.sidebar.title("Parámetros")
 st.image("Pythonlogo.png", width=150)
 
 # Mostramos una imagen en la barra lateral con un ancho de 100 píxeles
-st.sidebar.image("DMCLogo", width=200)
+st.sidebar.image("DMCLogo.png", width=200)
 
 # Mostramos un texto indicando el autor del proyecto
 st.write("Elaborado por: Gustavo Rodriguez")
