@@ -1,12 +1,103 @@
-import streamlit as st
-# Ingresar titulo
-st.title("Proyecto Final Diploma BI")
-# Ingresar titulo como barra lateral
-st.sidebar.title("Parámetros")
-# Ingresar imagenes
-st.image("Pythonlogo.png", width = 200)
-st.sidebar.image("DMCLogo.png", width = 100)
+# Importamos Streamlit para crear la aplicación web
 
-st.write("Elaborado por: Gustavo Rodriguez")
+import streamlit as st
+
+ 
+
+# Importamos Pandas para leer archivos CSV y Excel
+
+import pandas as pd
+
+ 
+
+# Creamos el título principal de la aplicación
+
+st.title("Proyecto Final Diploma BI")
+
+ 
+
+# Creamos un título en la barra lateral
+
+st.sidebar.title("Parámetros")
+
+ 
+
+# Mostramos una imagen en la página principal con un ancho de 500 píxeles
+
+st.image("Python_logo.png", width=500)
+
+ 
+
+# Mostramos una imagen en la barra lateral con un ancho de 100 píxeles
+
+st.sidebar.image("DMC.png", width=100)
+
+ 
+
+# Mostramos un texto indicando el autor del proyecto
+
+st.write("Elaborado por: Carlos Carrillo")
+
+ 
+
+# Creamos un cargador de archivos para subir archivos Excel o CSV
 
 archivo = st.file_uploader("Cargue el archivo excel o csv")
+
+ 
+
+# Validamos si el usuario cargó un archivo
+
+if archivo is not None:
+
+ 
+
+    # Validamos si el archivo cargado tiene extensión .csv
+
+    if archivo.name.endswith(".csv"):
+
+ 
+
+        # Leemos el archivo CSV y lo guardamos en un DataFrame
+
+        data = pd.read_csv(archivo)
+
+ 
+
+        # Mostramos el DataFrame en la aplicación
+
+        st.write(data)
+
+ 
+
+    # Validamos si el archivo cargado tiene extensión .xlsx
+
+    elif archivo.name.endswith(".xlsx"):
+
+ 
+
+        # Leemos el archivo Excel y lo guardamos en un DataFrame
+
+        data = pd.read_excel(archivo)
+
+ 
+
+        # Mostramos el DataFrame en la aplicación
+
+        st.write(data)
+
+ 
+
+    # Si el archivo no es CSV ni Excel, mostramos un mensaje de error
+
+    else:
+
+        st.write("Formato no válido")
+
+ 
+
+# Si el usuario no ha cargado ningún archivo, mostramos un mensaje
+
+else:
+
+    st.write("Por favor cargue su archivo")
