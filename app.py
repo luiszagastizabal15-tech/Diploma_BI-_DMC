@@ -7,5 +7,6 @@ st.sidebar.title("Parámetros")
 st.image("Pythonlogo.png", width = 200)
 st.sidebar.image("DMCLogo.png", width = 100)
 
-
 st.write("Elaborado por: Gustavo Rodriguez")
+
+archivo = st.file_uploader("Cargue el archivo excel o csv")
