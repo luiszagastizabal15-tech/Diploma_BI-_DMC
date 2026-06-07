@@ -1,6 +1,6 @@
 streamlit
 pandas
-openyxl
+openpyxl
 plotly
 seaborn
 matplotlib
