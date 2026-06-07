@@ -11,10 +11,10 @@ st.title("Proyecto Final Diploma BI")
 st.sidebar.title("Parámetros")
 
 # Mostramos una imagen en la página principal con un ancho de 500 píxeles
-st.image("Python_logo.png", width=150)
+st.image("Pythonlogo.png", width=150)
 
 # Mostramos una imagen en la barra lateral con un ancho de 100 píxeles
-st.sidebar.image("DMC.png", width=200)
+st.sidebar.image("DMCLogo", width=200)
 
 # Mostramos un texto indicando el autor del proyecto
 st.write("Elaborado por: Gustavo Rodriguez")
