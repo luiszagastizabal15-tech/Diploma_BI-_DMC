@@ -50,3 +50,4 @@ if archivo is not None:
 # Si el usuario no ha cargado ningún archivo, mostramos un mensaje
 else:
     st.write("Por favor cargue su archivo")
+    
