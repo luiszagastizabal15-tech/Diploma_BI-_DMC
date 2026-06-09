@@ -19,7 +19,7 @@ st.sidebar.image("DMCLogo.png", width=200)
 # Mostramos un texto indicando el autor del proyecto
 st.write("Elaborado por: Gustavo Rodriguez")
 
-modulos = st.selectbox('Seleccione un módulo',["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Analisis visual"])
+modulos = st.sitebar.selectbox('Seleccione un módulo',["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Analisis visual"])
 
 
 # Creamos un cargador de archivos para subir archivos Excel o CSV
