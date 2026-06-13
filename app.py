@@ -93,7 +93,7 @@ if modulos == "Home":
     st.write("**Año:** 2026")
 
     # Objetivo del proyecto
-    st.markdown("Objetivo del proyecto")
+    st.markdown("### Objetivo del proyecto")
     st.write(
         "Construir una aplicación en Streamlit capaz de cargar, validar, procesar "
         "y visualizar cualquiera de los cuatro datasets propuestos, mostrando un "
@@ -104,17 +104,6 @@ if modulos == "Home":
     # Tecnologías usadas
     st.markdown("### Tecnologías usadas")
     st.write("Python, Pandas, NumPy, Streamlit, Plotly, Matplotlib, Seaborn y GitHub.")
-
-    # Descripción de los cuatro datasets
-    st.markdown("### Datasets disponibles")
-    st.write("**1. AI Impact on Jobs:** información sobre el impacto de la inteligencia "
-             "artificial en distintos empleos, salarios y riesgo de reemplazo por industria.")
-    st.write("**2. Superstore:** datos de ventas de una tienda, con categorías, regiones, "
-             "utilidad, descuentos y fechas de pedidos.")
-    st.write("**3. E-commerce Risk:** registros de órdenes de comercio electrónico con "
-             "etiquetas de riesgo, métodos de pago, dispositivos y entregas.")
-    st.write("**4. Teen Mental Health:** datos exploratorios sobre el uso de redes sociales, "
-             "sueño, actividad física y niveles de estrés en adolescentes.")
 
     # Nota de uso responsable
     st.markdown("### Nota de uso responsable")
