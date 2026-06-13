@@ -89,11 +89,11 @@ if modulos == "Home":
     st.subheader("App analizadora de datasets con Streamlit")
 
     # Datos del autor y año
-    st.write("Autor: Gustavo Rodriguez")
+    st.write("**Autor:** Gustavo Rodriguez")
     st.write("**Año:** 2026")
 
     # Objetivo del proyecto
-    st.markdown("### Objetivo del proyecto")
+    st.markdown("Objetivo del proyecto")
     st.write(
         "Construir una aplicación en Streamlit capaz de cargar, validar, procesar "
         "y visualizar cualquiera de los cuatro datasets propuestos, mostrando un "
