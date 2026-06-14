@@ -1,4 +1,4 @@
-# # Importamos librerías
+# Librerías usadas
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -10,24 +10,20 @@ import seaborn as sns
 # ==============================
 # FUNCIONES REUTILIZABLES
 # ==============================
-# Creamos funciones para no repetir el mismo código en varios módulos.
 
-# Devuelve la lista de columnas numéricas del dataframe
+# Devuelve la lista de columnas numéricas
 def obtener_columnas_numericas(df):
     return df.select_dtypes(include="number").columns.tolist()
 
-
-# Devuelve la lista de columnas categóricas (texto) del dataframe
+# Devuelve la lista de columnas categóricas
 def obtener_columnas_categoricas(df):
     return df.select_dtypes(include=["object", "category"]).columns.tolist()
 
-
-# Devuelve la lista de columnas de tipo fecha del dataframe
+# Devuelve la lista de columnas de tipo fecha
 def obtener_columnas_fecha(df):
     return df.select_dtypes(include=["datetime", "datetime64[ns]"]).columns.tolist()
 
-
-# Calcula los outliers de una columna numérica usando la regla IQR
+# Calcula los outliers usando la regla IQR
 def detectar_outliers_iqr(serie):
     Q1 = serie.quantile(0.25)              # Primer cuartil
     Q3 = serie.quantile(0.75)              # Tercer cuartil
@@ -38,39 +34,36 @@ def detectar_outliers_iqr(serie):
     outliers = serie[(serie < limite_inferior) | (serie > limite_superior)]
     return outliers, limite_inferior, limite_superior
 
-
 # ==============================
 # CONFIGURACIÓN DE SESSION STATE
 # ==============================
 
-# Guardamos el dataset cargado
+# Para guardar el dataset cargado
 if "data" not in st.session_state:
     st.session_state.data = None
 
-# Guardamos el nombre del archivo cargado
+# Para guardar el nombre del dataset cargado
 if "nombre_archivo" not in st.session_state:
     st.session_state.nombre_archivo = None
-
 
 # ==============================
 # TÍTULO E IMÁGENES
 # ==============================
 
-# Creamos el título principal de la aplicación
+# Título principal 
 st.title("Proyecto Final Diploma BI")
 
-# Creamos un título en la barra lateral
+# Título en la barra lateral
 st.sidebar.title("Parámetros")
 
-# Mostramos una imagen en la página principal con un ancho de 150 píxeles
+# Imagen en página principal
 st.image("Pythonlogo.png", width=150)
 
-# Mostramos una imagen en la barra lateral con un ancho de 200 píxeles
+# Imagen en barra lateral
 st.sidebar.image("DMCLogo.png", width=200)
 
-# Mostramos un texto indicando el autor del proyecto
+# Creador (Yo)
 st.write("Elaborado por: Gustavo Rodriguez")
-
 
 # ==============================
 # MENÚ DE MÓDULOS
@@ -78,7 +71,6 @@ st.write("Elaborado por: Gustavo Rodriguez")
 
 modulos = st.sidebar.selectbox("Seleccione un módulo",
                                ["Home", "Carga y perfil del dataset", "Procesamiento de datos", "Análisis visual"])
-
 
 # ==============================
 # MÓDULO HOME
