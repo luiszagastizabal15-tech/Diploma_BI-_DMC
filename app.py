@@ -6,7 +6,6 @@ import plotly.express as px
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-
 # ==============================
 # FUNCIONES REUTILIZABLES
 # ==============================
@@ -62,9 +61,6 @@ st.image("Pythonlogo.png", width=150)
 # Imagen en barra lateral
 st.sidebar.image("DMCLogo.png", width=200)
 
-# Creador (Yo)
-st.write("Elaborado por: Gustavo Rodriguez")
-
 # ==============================
 # MENÚ DE MÓDULOS
 # ==============================
@@ -81,7 +77,7 @@ if modulos == "Home":
     st.subheader("App analizadora de datasets con Streamlit")
 
     # Datos del autor y año
-    st.write("**Autor:** Gustavo Rodriguez")
+    st.write("**Creado por:** Gustavo Rodriguez")
     st.write("**Año:** 2026")
 
     # Objetivo del proyecto
@@ -102,13 +98,12 @@ if modulos == "Home":
     st.info("Los resultados de esta aplicación son exploratorios y no reemplazan una "
             "validación técnica o profesional.")
 
-    # Mostramos el estado actual del dataset cargado
+    # Seteo del estado del dataset (Si se subió o no)
     st.markdown("---")
     if st.session_state.data is not None:
         st.success(f"Dataset cargado: {st.session_state.nombre_archivo}")
     else:
         st.info("Aún no se ha cargado ningún dataset.")
-
 
 # ==============================
 # MÓDULO CARGA Y PERFIL
@@ -118,38 +113,35 @@ elif modulos == "Carga y perfil del dataset":
 
     st.subheader("Carga y perfil del dataset")
 
-    # Creamos un cargador de archivos para subir archivos Excel o CSV
+    # Cargador de archivos en formatos Excel o CSV
     archivo = st.file_uploader(
         "Cargue el archivo Excel o CSV",
         type=["csv", "xlsx"]
     )
 
-    # Validamos si el usuario cargó un archivo
+    # Validación si el usuario cargó un archivo
     if archivo is not None:
-
-        # Guardamos el nombre del archivo en session_state
+        # Guardar nombre del archivo en session_state
         st.session_state.nombre_archivo = archivo.name
 
-        # Validamos si el archivo cargado tiene extensión .csv
+        # Validación de formato de archivo .csv
         if archivo.name.endswith(".csv"):
-
-            # Leemos el archivo CSV y lo guardamos en session_state
+            # Abrir el archivo CSV 
             st.session_state.data = pd.read_csv(archivo)
 
-        # Validamos si el archivo cargado tiene extensión .xlsx
+        # Validación de formato de archivo .xlsx
         elif archivo.name.endswith(".xlsx"):
-
-            # Leemos el archivo Excel y lo guardamos en session_state
+            # Abrir el archivo CSV  Excel 
             st.session_state.data = pd.read_excel(archivo)
 
-        # Si el archivo no es CSV ni Excel, mostramos un mensaje de error
+        # Mensaje de error si no es ninguno de los 2 formatos
         else:
             st.error("Formato no válido")
 
-        # Confirmamos que el archivo fue cargado
+        # Confirmación de que el archivo fue cargado
         st.success("Archivo cargado correctamente")
 
-    # Si ya existe un dataset cargado, lo mostramos
+    # Si se cargó, se muestra de esta manera
     if st.session_state.data is not None:
 
         # Guardamos el dataset en una variable corta para usarlo más fácil
@@ -162,9 +154,9 @@ elif modulos == "Carga y perfil del dataset":
         st.dataframe(data.head())
 
         # ----- MÉTRICAS RÁPIDAS -----
-        st.subheader("Métricas rápidas")
+        st.subheader("Métricas Generals")
 
-        # Calculamos los valores que vamos a mostrar
+        # Calculo de valores
         num_filas = data.shape[0]
         num_columnas = data.shape[1]
         num_numericas = len(obtener_columnas_numericas(data))
@@ -172,7 +164,7 @@ elif modulos == "Carga y perfil del dataset":
         total_nulos = int(data.isnull().sum().sum())
         total_duplicados = int(data.duplicated().sum())
 
-        # Organizamos las métricas en columnas con st.columns y st.metric
+        # Métrcas con st.columns y st.metric
         col1, col2, col3 = st.columns(3)
         col1.metric("Filas", num_filas)
         col2.metric("Columnas", num_columnas)
@@ -183,8 +175,8 @@ elif modulos == "Carga y perfil del dataset":
         col5.metric("Valores nulos", total_nulos)
         col6.metric("Duplicados", total_duplicados)
 
-        # ----- PERFIL BÁSICO -----
-        st.subheader("Perfil básico del dataset")
+        # ----- CARACTERÍSTICAS BÁSICAS -----
+        st.subheader("Características del dataset")
 
         # Nombres de columnas
         st.write("Columnas del dataset:")
@@ -194,7 +186,7 @@ elif modulos == "Carga y perfil del dataset":
         st.write("Tipos de datos:")
         st.write(data.dtypes)
 
-        # Valores nulos por columna
+        # Recuento de valores nulos por columna
         st.write("Valores nulos por columna:")
         st.write(data.isnull().sum())
 
@@ -202,25 +194,24 @@ elif modulos == "Carga y perfil del dataset":
         st.write("Estadística descriptiva:")
         st.write(data.describe())
 
-        # ----- SELECCIÓN DE COLUMNAS RELEVANTES -----
-        st.subheader("Seleccionar columnas relevantes")
+        # ----- DETALLE DE VARIABLES RELEVANTES -----
+        st.subheader("VISUALIZAR DETALLES DE VARIABLE")
         columnas_elegidas = st.multiselect(
-            "Elija las columnas que desea revisar:",
+            "Elija la/s varuables que desea revisar:",
             data.columns.tolist()
         )
-        # Mostramos solo las columnas elegidas (si el usuario eligió alguna)
+        # Mostrar solo las columnas elegidas 
         if columnas_elegidas:
             st.dataframe(data[columnas_elegidas].head())
 
-        # Botón para eliminar el dataset cargado
-        if st.button("Eliminar dataset cargado"):
+        # Opción para eliminar el dataset cargado
+        if st.button("Eliminar dataset"):
             st.session_state.data = None
             st.session_state.nombre_archivo = None
             st.rerun()
 
     else:
         st.write("Por favor cargue su archivo.")
-
 
 # ==============================
 # MÓDULO PROCESAMIENTO DE DATOS
@@ -230,15 +221,15 @@ elif modulos == "Procesamiento de datos":
 
     st.subheader("Procesamiento de datos")
 
-    # Validamos que exista un dataset antes de procesar
+    # Validación si se subió un dataset
     if st.session_state.data is not None:
 
-        # Trabajamos sobre una copia para no dañar el original
+        # Hacer una copia del dataset original
         data = st.session_state.data.copy()
 
         # ----- ESTANDARIZAR NOMBRES DE COLUMNAS -----
         st.markdown("### 1. Nombres de columnas")
-        # Con un checkbox dejamos que el usuario decida si limpia los nombres
+        # Opción para limpiar nombres con checkbox
         if st.checkbox("Estandarizar nombres de columnas (minúsculas y sin espacios)"):
             data.columns = (
                 data.columns
@@ -263,13 +254,13 @@ elif modulos == "Procesamiento de datos":
 
         # ----- CONVERSIÓN DE FECHAS -----
         st.markdown("### 3. Conversión de fechas")
-        # Dejamos que el usuario elija columnas de texto para convertir a fecha
+        # Opción de seleccionar columnas a convertir a en formato fecha
         posibles_fechas = st.multiselect(
             "Seleccione columnas que deban convertirse a fecha:",
             columnas_cat
         )
         for col in posibles_fechas:
-            # Usamos errors='coerce' para no romper la app con formatos distintos
+            # Usando errors='coerce' para no romper la app con formatos distintos
             data[col] = pd.to_datetime(data[col], errors="coerce")
         if posibles_fechas:
             st.session_state.data = data
@@ -277,7 +268,7 @@ elif modulos == "Procesamiento de datos":
 
         # ----- VALORES NULOS Y DUPLICADOS -----
         st.markdown("### 4. Valores nulos y duplicados")
-        # Calculamos nulos y su porcentaje por columna
+        # Recuento de valores nulos
         nulos = data.isnull().sum()
         porcentaje_nulos = (nulos / len(data) * 100).round(2)
         tabla_nulos = pd.DataFrame({
@@ -287,7 +278,7 @@ elif modulos == "Procesamiento de datos":
         st.write("Valores faltantes por columna:")
         st.dataframe(tabla_nulos)
 
-        # Reportamos la cantidad de duplicados
+        # Recuento cantidad de duplicados
         duplicados = data.duplicated().sum()
         st.write(f"Filas duplicadas: **{duplicados}**")
 
@@ -298,21 +289,21 @@ elif modulos == "Procesamiento de datos":
                 "Seleccione una columna numérica:",
                 columnas_num
             )
-            # Usamos nuestra función reutilizable para detectar outliers
+            # Función reutilizable
             outliers, lim_inf, lim_sup = detectar_outliers_iqr(data[columna_outlier])
             st.write(f"Límite inferior: {round(lim_inf, 2)} | Límite superior: {round(lim_sup, 2)}")
             st.write(f"Cantidad de outliers encontrados: **{len(outliers)}**")
         else:
             st.info("El dataset no tiene columnas numéricas para analizar outliers.")
 
-        # ----- FILTRO DINÁMICO SIMPLE -----
+        # ----- FILTRO DINÁMICO -----
         st.markdown("### 6. Filtro dinámico")
         if columnas_cat:
             columna_filtro = st.selectbox(
                 "Filtrar por una columna categórica:",
                 columnas_cat
             )
-            # Mostramos los valores únicos de esa columna para elegir
+            # Mostrar valores únicos a elegir
             valores = st.multiselect(
                 "Seleccione los valores a mostrar:",
                 data[columna_filtro].dropna().unique().tolist()
@@ -339,18 +330,18 @@ elif modulos == "Análisis visual":
 
     st.subheader("Análisis visual")
 
-    # Validamos que exista un dataset antes de graficar
+    # Validación si se subió dataset
     if st.session_state.data is not None:
 
         # Guardamos el dataset en una variable corta
         data = st.session_state.data
 
-        # Obtenemos las listas de columnas con nuestras funciones reutilizables
+        # Obtenemos las listas de columnas 
         columnas_num = obtener_columnas_numericas(data)
         columnas_cat = obtener_columnas_categoricas(data)
         columnas_fecha = obtener_columnas_fecha(data)
 
-        # Creamos las pestañas del análisis con st.tabs
+        # Creación de pestañas para el análisis
         tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
             "Resumen", "Univariado", "Bivariado",
             "Multivariado", "Temporal", "Insights"
@@ -358,7 +349,7 @@ elif modulos == "Análisis visual":
 
         # ----- TAB 1: RESUMEN -----
         with tab1:
-            st.markdown("#### Resumen general")
+            st.markdown("#### Resumen")
             col1, col2, col3 = st.columns(3)
             col1.metric("Filas", data.shape[0])
             col2.metric("Columnas", data.shape[1])
@@ -374,14 +365,14 @@ elif modulos == "Análisis visual":
         with tab2:
             st.markdown("#### Análisis univariado")
 
-            # Analizamos una variable numérica
+            # Analizador de variable numérica
             if columnas_num:
                 variable_num = st.selectbox(
                     "Seleccione una columna numérica:",
                     columnas_num,
                     key="uni_num"
                 )
-                # Organizamos histograma y boxplot en dos columnas
+                # Organización de histograma y boxplot en dos columnas
                 col1, col2 = st.columns(2)
                 with col1:
                     fig_hist = px.histogram(data, x=variable_num,
@@ -394,14 +385,14 @@ elif modulos == "Análisis visual":
             else:
                 st.info("El dataset no tiene columnas numéricas.")
 
-            # Analizamos una variable categórica
+            # Analizar variable categórica
             if columnas_cat:
                 variable_cat = st.selectbox(
                     "Seleccione una columna categórica:",
                     columnas_cat,
                     key="uni_cat"
                 )
-                # Contamos las categorías y las graficamos en barras
+                # Contao y grafico de barras
                 conteo = data[variable_cat].value_counts().reset_index()
                 conteo.columns = [variable_cat, "conteo"]
                 fig_barras = px.bar(conteo, x=variable_cat, y="conteo",
@@ -414,7 +405,7 @@ elif modulos == "Análisis visual":
         with tab3:
             st.markdown("#### Análisis bivariado")
 
-            # Necesitamos al menos dos columnas numéricas para el scatter
+            # Condicional de mínimo para el scatter
             if len(columnas_num) >= 2:
                 col1, col2 = st.columns(2)
                 with col1:
@@ -427,7 +418,7 @@ elif modulos == "Análisis visual":
             else:
                 st.info("Se necesitan al menos dos columnas numéricas.")
 
-            # Boxplot de una variable numérica según una categórica
+            # Boxplot de  variable numérica / categórica
             if columnas_num and columnas_cat:
                 var_num_bi = st.selectbox("Variable numérica:", columnas_num, key="bi_num")
                 var_cat_bi = st.selectbox("Variable categórica:", columnas_cat, key="bi_cat")
@@ -439,12 +430,12 @@ elif modulos == "Análisis visual":
         with tab4:
             st.markdown("#### Análisis multivariado")
 
-            # Mostramos un heatmap de correlación con Seaborn
+            # Heatmap de correlación con Seaborn
             if len(columnas_num) >= 2:
                 st.write("Mapa de calor de correlaciones:")
-                # Calculamos la matriz de correlación
+                # Matriz de correlación
                 correlacion = data[columnas_num].corr()
-                # Creamos la figura con Matplotlib/Seaborn
+                # Figura usando Matplotlib/Seaborn
                 fig, ax = plt.subplots()
                 sns.heatmap(correlacion, annot=True, cmap="Blues", ax=ax)
                 st.pyplot(fig)
@@ -455,11 +446,11 @@ elif modulos == "Análisis visual":
         with tab5:
             st.markdown("#### Análisis temporal")
 
-            # Solo mostramos análisis temporal si hay columnas de fecha
+            # Condicion para solo mostrar si existen fechas para el análisis
             if columnas_fecha and columnas_num:
                 col_fecha = st.selectbox("Columna de fecha:", columnas_fecha, key="temp_fecha")
                 col_valor = st.selectbox("Variable numérica:", columnas_num, key="temp_valor")
-                # Ordenamos por fecha y graficamos la línea de tiempo
+                # Ordenar fechas y graficar línea de tiempo
                 data_orden = data.sort_values(by=col_fecha)
                 fig_linea = px.line(data_orden, x=col_fecha, y=col_valor,
                                     title=f"Evolución de {col_valor} en el tiempo")
@@ -481,7 +472,7 @@ elif modulos == "Análisis visual":
                 st.write(f"- Hay **{len(columnas_num)}** variables numéricas y "
                          f"**{len(columnas_cat)}** categóricas.")
 
-            st.info("Recuerde: estas conclusiones son exploratorias y deben "
+            st.info("Estas conclusiones son exploratorias y deben "
                     "interpretarse con cuidado, sin afirmaciones exageradas.")
 
     else:
